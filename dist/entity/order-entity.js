@@ -24,6 +24,14 @@ __decorate([
     typeorm_1.Column({}),
     __metadata("design:type", Number)
 ], Orders.prototype, "UserID", void 0);
+__decorate([
+    typeorm_1.Column({}),
+    __metadata("design:type", Number)
+], Orders.prototype, "TotalAmount", void 0);
+__decorate([
+    typeorm_1.Column({}),
+    __metadata("design:type", Date)
+], Orders.prototype, "OrderDate", void 0);
 Orders = __decorate([
     typeorm_1.Entity("Orders")
 ], Orders);

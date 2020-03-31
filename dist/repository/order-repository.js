@@ -21,8 +21,6 @@ const { EventHubProducerClient } = require("@azure/event-hubs");
 let OrderRepository = class OrderRepository {
     constructor() {
         this.connectionString = "Endpoint=sb://inventory-hub-ns.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=PUJyiOw89coBuCo0mZEg7W7sCgpNwhOT4wXTsgqLgE8=";
-        //EventHubClient  = require("@azure/event-hubs@2");
-        // Name of the event hub. For example: myeventhub
         this.eventHubsName = "inventoryeventhub";
     }
     GetOrder(id) {
@@ -33,10 +31,10 @@ let OrderRepository = class OrderRepository {
         console.log(order);
         const orderRes = typeorm_1.getManager()
             .query('SaveOrder @CartID=' + order.CartID + ',@UserID=' + order.UserID);
-        this.sendNotification(order);
+        this.SendNotification(order);
         return orderRes;
     }
-    sendNotification(order) {
+    SendNotification(order) {
         return __awaiter(this, void 0, void 0, function* () {
             //call service eventhub.publish
             try {
@@ -45,13 +43,9 @@ let OrderRepository = class OrderRepository {
                 // Prepare a batch of three events.
                 const batch = yield producer.createBatch();
                 batch.tryAdd({ body: order });
-                //   batch.tryAdd({ body: "Second event" });
-                //   batch.tryAdd({ body: "Third event" });
-                // Send the batch to the event hub.
                 yield producer.sendBatch(batch);
                 // Close the producer client.
                 yield producer.close();
-                console.log("A batch of three events have been sent to the event hub");
             }
             catch (error) {
                 console.log("Error occurred: ", error);

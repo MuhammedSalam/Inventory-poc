@@ -7,13 +7,20 @@ export class Orders {
     OrderID!: number;
 
     @Column({
-        
+
     })
     CartID!: number;
 
     @Column({
-        
+
     })
     UserID!: number;
-    
+    @Column({
+
+    })
+    TotalAmount!: number
+    @Column({
+
+    })
+    OrderDate!: Date
 }
