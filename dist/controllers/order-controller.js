@@ -37,8 +37,10 @@ const inversify_1 = require("inversify");
 const type_1 = __importDefault(require("../type"));
 const order_entity_1 = require("../entity/order-entity");
 let OrderController = class OrderController {
-    constructor(orderRepository) {
+    constructor(orderRepository, productRepository, notificationRepository) {
         this._orderRepository = orderRepository;
+        this._productRepository = productRepository;
+        this._notificationRepository = notificationRepository;
     }
     GetOrderById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,24 +63,29 @@ let OrderController = class OrderController {
         });
     }
     Index(req, res) {
-        try {
-            console.log("Received PlaceOrder ==> POST");
-            console.log(req.body);
-            // if (parseInt(req.params.id) > 0) {
-            //let cartId = parseInt(req.body.id);
-            let order = new order_entity_1.Orders();
-            order.CartID = req.body.cartid;
-            order.UserID = req.body.userid;
-            const orderRes = this._orderRepository.CreateOrder(order);
-            res.status(200).json(orderRes);
-            // }
-            // else {
-            //     return res.status(404).send('Cart with given id not found');
-            // }
-        }
-        catch (error) {
-            res.status(400).json(error);
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                console.log("Received PlaceOrder ==> POST");
+                let order = new order_entity_1.Orders();
+                order.CartID = req.body.cartid;
+                order.UserID = req.body.userid;
+                var orderResTemp;
+                const orderRes = yield this._orderRepository.CreateOrder(order).then((order) => {
+                    console.log("Order Result : " + JSON.stringify(order));
+                    orderResTemp = order;
+                    res.status(200).json(order);
+                });
+                const ProdRes = yield this._productRepository.GetProductByCartId(parseInt(req.body.cartid)).then((prod) => {
+                    console.log("Prod Result : " + JSON.stringify(prod));
+                    var resultJson = JSON.stringify({ order: orderResTemp, product: prod });
+                    console.log("Result Json : " + resultJson);
+                    this._notificationRepository.SendMessageToSb(resultJson);
+                });
+            }
+            catch (error) {
+                res.status(400).json(error);
+            }
+        });
     }
 };
 __decorate([
@@ -93,12 +100,14 @@ __decorate([
     __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], OrderController.prototype, "Index", null);
 OrderController = __decorate([
     inversify_express_utils_1.controller("/orders"),
     __param(0, inversify_1.inject(type_1.default.OrderRepository)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, inversify_1.inject(type_1.default.ProductRepository)),
+    __param(2, inversify_1.inject(type_1.default.NotificationRepository)),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], OrderController);
 exports.OrderController = OrderController;
 //# sourceMappingURL=order-controller.js.map

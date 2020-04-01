@@ -4,13 +4,26 @@ import { inject } from 'inversify';
 import TYPES from '../type';
 import { IOrderRepository } from '../repository/Interface/IOrderRepository';
 import { Orders } from '../entity/order-entity';
+import { IProductRepository } from '../repository/Interface/IProductRepository';
+import { INotificationRepository } from '../repository/Interface/INotificationRepository';
 
 @controller("/orders")
 export class OrderController implements interfaces.Controller {
 
     private _orderRepository: IOrderRepository;
-    constructor(@inject(TYPES.OrderRepository) orderRepository: IOrderRepository) {
+
+    private _productRepository: IProductRepository;
+    private _notificationRepository: INotificationRepository;
+
+    constructor(@inject(TYPES.OrderRepository) orderRepository: IOrderRepository,
+    
+        @inject(TYPES.ProductRepository) productRepository: IProductRepository,
+
+        @inject(TYPES.NotificationRepository) notificationRepository: INotificationRepository) {
+
         this._orderRepository = orderRepository;
+        this._productRepository = productRepository;
+        this._notificationRepository = notificationRepository;
     }
 
 
@@ -38,26 +51,32 @@ export class OrderController implements interfaces.Controller {
     }
 
     @httpPost("/")
-    public Index(@request() req: express.Request, @response() res: express.Response) {
+    public async Index(@request() req: express.Request, @response() res: express.Response) {
         try {
 
             console.log("Received PlaceOrder ==> POST");
-         
-            console.log(req.body);
 
-            // if (parseInt(req.params.id) > 0) {
-            //let cartId = parseInt(req.body.id);
             let order: Orders = new Orders();
 
             order.CartID = req.body.cartid;
             order.UserID = req.body.userid
+            var orderResTemp: any;
 
-            const orderRes = this._orderRepository.CreateOrder(order);
-            res.status(200).json(orderRes);
-            // }
-            // else {
-            //     return res.status(404).send('Cart with given id not found');
-            // }
+            const orderRes = await this._orderRepository.CreateOrder(order).then((order: any) => {
+
+                console.log("Order Result : " + JSON.stringify(order));
+                orderResTemp = order;
+                res.status(200).json(order);
+
+            });
+
+            const ProdRes = await this._productRepository.GetProductByCartId(parseInt(req.body.cartid)).then((prod: any) => {
+                console.log("Prod Result : " + JSON.stringify(prod));
+                var resultJson = JSON.stringify({ order: orderResTemp, product: prod });
+                console.log("Result Json : " + resultJson);
+                this._notificationRepository.SendMessageToSb(resultJson);
+
+            });
 
         } catch (error) {
             res.status(400).json(error);

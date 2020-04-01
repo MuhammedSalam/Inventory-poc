@@ -13,7 +13,9 @@
     "dependencies": {
         "@azure/event-hubs": "^2.1.4",
         "@azure/event-processor-host": "^2.1.1",
+        "@azure/service-bus": "^1.1.5",
         "@types/node": "^12.12.31",
+        "azure": "^2.3.1-preview",
         "azure-event-hubs": "^0.2.11",
         "express": "^4.17.1",
         "inversify": "^5.0.1",

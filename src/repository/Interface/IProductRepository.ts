@@ -1,14 +1,15 @@
 import { Product } from "../../entity/product-entity";
 export interface IProductRepository {
 
-    getProducts(): any;
+    GetProducts(): any;
 
-    createProduct(product: Product): any;
+    CreateProduct(product: Product): any;
 
-    getProductById(id: number): any;
+    GetProductById(id: number): any;
 
-    updateProduct(id: number, product: Product): any
+    UpdateProduct(id: number, product: Product): any
 
-    deleteProduct(id: number): any;
+    DeleteProduct(id: number): any;
 
+    GetProductByCartId(id: number): any;
 }

@@ -26,7 +26,6 @@ const typeorm_1 = require("typeorm");
 const appConfig = __importStar(require("./common/app-config"));
 const inversify_express_utils_1 = require("inversify-express-utils");
 const inversify_config_1 = __importDefault(require("./inversify.config"));
-//import { EventHubClient } from  "@azure/event-hubs@2"
 require("./controllers/user.controller");
 require("./controllers/product-controller");
 require("./controllers/cart-controller");

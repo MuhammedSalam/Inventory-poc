@@ -7,7 +7,6 @@ import * as appConfig from "./common/app-config";
 
 import { InversifyExpressServer, interfaces, TYPE } from "inversify-express-utils";
 import container from "./inversify.config";
-//import { EventHubClient } from  "@azure/event-hubs@2"
 
 import './controllers/user.controller';
 import './controllers/product-controller';
