@@ -1,16 +1,17 @@
 import { injectable } from "inversify";
 var azure = require('azure');
 
-import { INotificationRepository } from "./Interface/INotificationRepository";
+//import { INotificationRepository } from "./Interface/INotificationRepository";
+import { environment } from "../environments/environment.prod";
 
 
-var connectionString = "Endpoint=sb://inventory-sb-poc.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=xHoaQB6DbhPOSrLaOdVhndwwi9YdSxvV26zjFdR08yE=";
-var serviceBusQueueName = "inventory-queue-poc";
+let connectionString: string = environment.ServiceBusConnString;
+let serviceBusQueueName: string = environment.QueueName;
 
 @injectable()
-export class NotificationRepository implements INotificationRepository {
+export class NotificationService {
 
-    SendMessageToSb(messageBody: any) {
+    sendMessageToSb(messageBody: any) {
         try {
 
             var retryOperations = new azure.ExponentialRetryPolicyFilter();

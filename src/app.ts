@@ -13,7 +13,7 @@ import './controllers/product-controller';
 import './controllers/cart-controller';
 import './controllers/order-controller';
 
- 
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -24,17 +24,17 @@ let server = new InversifyExpressServer(container, null, { rootPath: "/api" }, a
 let appConfigured = server.build();
 
 
-appConfigured.set("port", process.env.PORT || 8080 )
+appConfigured.set("port", process.env.PORT || 8080)
 
 appConfigured.listen(appConfigured.get("port"), () => {
-   
+
     console.log(("  App is running at http://localhost:%d in %s mode"), appConfigured.get("port"), appConfigured.get("env"));
     console.log("  Press CTRL-C to stop\n");
 });
 
 
 createConnection(appConfig.dbOptions).then(async connection => {
-    console.log("Connected to DB");
+    console.log("Connected to DB: " + appConfig.dbOptions.database);
 
 }).catch(error => console.log("TypeORM connection error: ", error));
 

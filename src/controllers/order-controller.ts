@@ -5,7 +5,7 @@ import TYPES from '../type';
 import { IOrderRepository } from '../repository/Interface/IOrderRepository';
 import { Orders } from '../entity/order-entity';
 import { IProductRepository } from '../repository/Interface/IProductRepository';
-import { INotificationRepository } from '../repository/Interface/INotificationRepository';
+import { INotificationService } from '../services/interfaces/INotificationService';
 
 @controller("/orders")
 export class OrderController implements interfaces.Controller {
@@ -13,17 +13,17 @@ export class OrderController implements interfaces.Controller {
     private _orderRepository: IOrderRepository;
 
     private _productRepository: IProductRepository;
-    private _notificationRepository: INotificationRepository;
+    private _notificationService: INotificationService;
 
     constructor(@inject(TYPES.OrderRepository) orderRepository: IOrderRepository,
     
         @inject(TYPES.ProductRepository) productRepository: IProductRepository,
 
-        @inject(TYPES.NotificationRepository) notificationRepository: INotificationRepository) {
+        @inject(TYPES.NotificationService) notificationService: INotificationService) {
 
         this._orderRepository = orderRepository;
         this._productRepository = productRepository;
-        this._notificationRepository = notificationRepository;
+        this._notificationService = notificationService;
     }
 
 
@@ -74,7 +74,7 @@ export class OrderController implements interfaces.Controller {
                 console.log("Prod Result : " + JSON.stringify(prod));
                 var resultJson = JSON.stringify({ order: orderResTemp, product: prod });
                 console.log("Result Json : " + resultJson);
-                this._notificationRepository.SendMessageToSb(resultJson);
+                this._notificationService.sendMessageToSb(resultJson);
 
             });
 

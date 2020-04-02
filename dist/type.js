@@ -5,7 +5,7 @@ const TYPES = {
     ProductRepository: Symbol('ProductRepository'),
     CartRepository: Symbol('CartRepository'),
     OrderRepository: Symbol('OrderRepository'),
-    NotificationRepository: Symbol('NotificationRepository')
+    NotificationService: Symbol('NotificationService')
 };
 exports.default = TYPES;
 //# sourceMappingURL=type.js.map

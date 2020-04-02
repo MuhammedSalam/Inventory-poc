@@ -10,8 +10,8 @@ import { ICartRepository } from './repository/Interface/ICartRepository';
 import { CartRepository } from './repository/cart-repository';
 import { IOrderRepository } from './repository/Interface/IOrderRepository';
 import { OrderRepository } from './repository/order-repository';
-import { INotificationRepository } from './repository/Interface/INotificationRepository';
-import { NotificationRepository } from './repository/notification-repository';
+import { INotificationService } from './services/interfaces/INotificationService';
+import { NotificationService } from './services/notification.service';
 
 
 const container = new Container();
@@ -20,5 +20,5 @@ container.bind<IUserRepository>(TYPES.UserRepository ).to(UserRepository).inSing
 container.bind<IProductRepository>(TYPES.ProductRepository ).to(ProductRepository).inSingletonScope();
 container.bind<ICartRepository>(TYPES.CartRepository ).to(CartRepository).inSingletonScope();
 container.bind<IOrderRepository>(TYPES.OrderRepository ).to(OrderRepository).inSingletonScope();
-container.bind<INotificationRepository>(TYPES.NotificationRepository ).to(NotificationRepository).inSingletonScope();
+container.bind<INotificationService>(TYPES.NotificationService ).to(NotificationService).inSingletonScope();
 export default container;

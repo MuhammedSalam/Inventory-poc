@@ -37,10 +37,10 @@ const inversify_1 = require("inversify");
 const type_1 = __importDefault(require("../type"));
 const order_entity_1 = require("../entity/order-entity");
 let OrderController = class OrderController {
-    constructor(orderRepository, productRepository, notificationRepository) {
+    constructor(orderRepository, productRepository, notificationService) {
         this._orderRepository = orderRepository;
         this._productRepository = productRepository;
-        this._notificationRepository = notificationRepository;
+        this._notificationService = notificationService;
     }
     GetOrderById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -79,7 +79,7 @@ let OrderController = class OrderController {
                     console.log("Prod Result : " + JSON.stringify(prod));
                     var resultJson = JSON.stringify({ order: orderResTemp, product: prod });
                     console.log("Result Json : " + resultJson);
-                    this._notificationRepository.SendMessageToSb(resultJson);
+                    this._notificationService.sendMessageToSb(resultJson);
                 });
             }
             catch (error) {
@@ -106,7 +106,7 @@ OrderController = __decorate([
     inversify_express_utils_1.controller("/orders"),
     __param(0, inversify_1.inject(type_1.default.OrderRepository)),
     __param(1, inversify_1.inject(type_1.default.ProductRepository)),
-    __param(2, inversify_1.inject(type_1.default.NotificationRepository)),
+    __param(2, inversify_1.inject(type_1.default.NotificationService)),
     __metadata("design:paramtypes", [Object, Object, Object])
 ], OrderController);
 exports.OrderController = OrderController;

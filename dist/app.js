@@ -41,7 +41,7 @@ appConfigured.listen(appConfigured.get("port"), () => {
     console.log("  Press CTRL-C to stop\n");
 });
 typeorm_1.createConnection(appConfig.dbOptions).then((connection) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Connected to DB");
+    console.log("Connected to DB: " + appConfig.dbOptions.database);
 })).catch(error => console.log("TypeORM connection error: ", error));
 module.exports = app;
 //# sourceMappingURL=app.js.map

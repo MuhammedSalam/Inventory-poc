@@ -82,6 +82,7 @@ let ProductController = class ProductController {
             prd.Description = req.body.description;
             prd.Price = req.body.price;
             prd.ProdCount = req.body.prodcount;
+            prd.CountInCart = 0;
             const product = this._productRepository.createProduct(prd);
             res.status(200).json(product);
         }
