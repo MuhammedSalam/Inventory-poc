@@ -6,12 +6,12 @@ import { IOrderRepository } from "./Interface/IOrderRepository";
 @injectable()
 export class OrderRepository implements IOrderRepository {
 
-    GetOrder(id: number) {
+    getOrder(id: number) {
         return getManager()
             .query('GetOrderByUserId @UserId=' + id);
     }
 
-    CreateOrder(order: Orders) {
+    createOrder(order: Orders) {
 
         const orderRes = getManager()
             .query('SaveOrder @CartID=' + order.CartID + ',@UserID=' + order.UserID);

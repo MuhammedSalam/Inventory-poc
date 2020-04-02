@@ -48,7 +48,7 @@ let OrderController = class OrderController {
                 console.log("Received GetOrderById ==> GET");
                 console.log(req.params);
                 if (parseInt(req.params.id) > 0) {
-                    const order = yield this._orderRepository.GetOrder(parseInt(req.params.id)).then((order) => {
+                    const order = yield this._orderRepository.getOrder(parseInt(req.params.id)).then((order) => {
                         console.log("Result : " + order);
                         res.status(200).json(order);
                     });
@@ -70,12 +70,12 @@ let OrderController = class OrderController {
                 order.CartID = req.body.cartid;
                 order.UserID = req.body.userid;
                 var orderResTemp;
-                const orderRes = yield this._orderRepository.CreateOrder(order).then((order) => {
+                const orderRes = yield this._orderRepository.createOrder(order).then((order) => {
                     console.log("Order Result : " + JSON.stringify(order));
                     orderResTemp = order;
                     res.status(200).json(order);
                 });
-                const ProdRes = yield this._productRepository.GetProductByCartId(parseInt(req.body.cartid)).then((prod) => {
+                const ProdRes = yield this._productRepository.getProductByCartId(parseInt(req.body.cartid)).then((prod) => {
                     console.log("Prod Result : " + JSON.stringify(prod));
                     var resultJson = JSON.stringify({ order: orderResTemp, product: prod });
                     console.log("Result Json : " + resultJson);

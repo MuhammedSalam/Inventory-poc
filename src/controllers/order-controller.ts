@@ -35,7 +35,7 @@ export class OrderController implements interfaces.Controller {
             console.log(req.params);
 
             if (parseInt(req.params.id) > 0) {
-                const order = await this._orderRepository.GetOrder(parseInt(req.params.id)).then((order: any) => {
+                const order = await this._orderRepository.getOrder(parseInt(req.params.id)).then((order: any) => {
                     console.log("Result : " + order);
                     res.status(200).json(order);
                 });
@@ -62,7 +62,7 @@ export class OrderController implements interfaces.Controller {
             order.UserID = req.body.userid
             var orderResTemp: any;
 
-            const orderRes = await this._orderRepository.CreateOrder(order).then((order: any) => {
+            const orderRes = await this._orderRepository.createOrder(order).then((order: any) => {
 
                 console.log("Order Result : " + JSON.stringify(order));
                 orderResTemp = order;
@@ -70,7 +70,7 @@ export class OrderController implements interfaces.Controller {
 
             });
 
-            const ProdRes = await this._productRepository.GetProductByCartId(parseInt(req.body.cartid)).then((prod: any) => {
+            const ProdRes = await this._productRepository.getProductByCartId(parseInt(req.body.cartid)).then((prod: any) => {
                 console.log("Prod Result : " + JSON.stringify(prod));
                 var resultJson = JSON.stringify({ order: orderResTemp, product: prod });
                 console.log("Result Json : " + resultJson);

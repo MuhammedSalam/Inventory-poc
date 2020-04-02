@@ -18,7 +18,7 @@ export class ProductController implements interfaces.Controller {
         try {
             console.log("Received GetAllProducts ==> GET");
 
-            await this._productRepository.GetProducts().then((result: any) => {
+            await this._productRepository.getProducts().then((result: any) => {
                 console.log("Result : " + result);
                 res.send(result);
             });
@@ -35,7 +35,7 @@ export class ProductController implements interfaces.Controller {
             console.log(req.params);
 
             if (parseInt(req.params.id) > 0) {
-                const product = await this._productRepository.GetProductById(parseInt(req.params.id)).then((product: any) => {
+                const product = await this._productRepository.getProductById(parseInt(req.params.id)).then((product: any) => {
                     console.log("Result : " + product);
                     res.status(200).json(product);
                 });
@@ -63,7 +63,7 @@ export class ProductController implements interfaces.Controller {
             prd.Price = req.body.price;
             prd.ProdCount = req.body.prodcount;
 
-            const product = this._productRepository.CreateProduct(prd);
+            const product = this._productRepository.createProduct(prd);
             res.status(200).json(product);
         } catch (error) {
             res.status(400).json(error);
@@ -87,7 +87,7 @@ export class ProductController implements interfaces.Controller {
                 prd.Price = req.body.price;
                 prd.ProdCount = req.body.prodcount;
 
-                const product = this._productRepository.UpdateProduct(prodId, prd);
+                const product = this._productRepository.updateProduct(prodId, prd);
                 res.status(200).json(product);
             }
             else {
@@ -108,7 +108,7 @@ export class ProductController implements interfaces.Controller {
             console.log(req.params);
 
             if (parseInt(req.params.id) > 0) {
-                const product = this._productRepository.DeleteProduct(parseInt(req.params.id));
+                const product = this._productRepository.deleteProduct(parseInt(req.params.id));
                 res.status(200).json(product);
             }
             else {

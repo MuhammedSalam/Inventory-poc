@@ -9,11 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const typeorm_1 = require("typeorm");
 let OrderRepository = class OrderRepository {
-    GetOrder(id) {
+    getOrder(id) {
         return typeorm_1.getManager()
             .query('GetOrderByUserId @UserId=' + id);
     }
-    CreateOrder(order) {
+    createOrder(order) {
         const orderRes = typeorm_1.getManager()
             .query('SaveOrder @CartID=' + order.CartID + ',@UserID=' + order.UserID);
         return orderRes;

@@ -44,7 +44,7 @@ let ProductController = class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 console.log("Received GetAllProducts ==> GET");
-                yield this._productRepository.GetProducts().then((result) => {
+                yield this._productRepository.getProducts().then((result) => {
                     console.log("Result : " + result);
                     res.send(result);
                 });
@@ -59,7 +59,7 @@ let ProductController = class ProductController {
                 console.log("Received GetProductId ==> GET");
                 console.log(req.params);
                 if (parseInt(req.params.id) > 0) {
-                    const product = yield this._productRepository.GetProductById(parseInt(req.params.id)).then((product) => {
+                    const product = yield this._productRepository.getProductById(parseInt(req.params.id)).then((product) => {
                         console.log("Result : " + product);
                         res.status(200).json(product);
                     });
@@ -82,7 +82,7 @@ let ProductController = class ProductController {
             prd.Description = req.body.description;
             prd.Price = req.body.price;
             prd.ProdCount = req.body.prodcount;
-            const product = this._productRepository.CreateProduct(prd);
+            const product = this._productRepository.createProduct(prd);
             res.status(200).json(product);
         }
         catch (error) {
@@ -101,7 +101,7 @@ let ProductController = class ProductController {
                 prd.Description = req.body.description;
                 prd.Price = req.body.price;
                 prd.ProdCount = req.body.prodcount;
-                const product = this._productRepository.UpdateProduct(prodId, prd);
+                const product = this._productRepository.updateProduct(prodId, prd);
                 res.status(200).json(product);
             }
             else {
@@ -118,7 +118,7 @@ let ProductController = class ProductController {
                 console.log("Received DeleteProduct ==> PUT");
                 console.log(req.params);
                 if (parseInt(req.params.id) > 0) {
-                    const product = this._productRepository.DeleteProduct(parseInt(req.params.id));
+                    const product = this._productRepository.deleteProduct(parseInt(req.params.id));
                     res.status(200).json(product);
                 }
                 else {

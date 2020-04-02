@@ -13,23 +13,23 @@ let ProductRepository = class ProductRepository {
     constructor() {
         this.Joi = require('joi');
     }
-    GetProducts() {
+    getProducts() {
         return typeorm_1.getManager().getRepository(product_entity_1.Product).find();
     }
-    CreateProduct(product) {
+    createProduct(product) {
         return typeorm_1.getManager().getRepository(product_entity_1.Product).save(product);
     }
-    GetProductById(id) {
+    getProductById(id) {
         return typeorm_1.getManager().getRepository(product_entity_1.Product).findByIds([id]);
     }
-    GetProductByCartId(id) {
+    getProductByCartId(id) {
         return typeorm_1.getManager()
             .query('GetProductDetailsByCartId @CartId=' + id);
     }
-    UpdateProduct(id, product) {
+    updateProduct(id, product) {
         return typeorm_1.getManager().getRepository(product_entity_1.Product).update(id, product);
     }
-    DeleteProduct(id) {
+    deleteProduct(id) {
         return typeorm_1.getManager().getRepository(product_entity_1.Product).delete(id);
     }
 };

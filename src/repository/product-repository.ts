@@ -7,29 +7,29 @@ export class ProductRepository implements IProductRepository {
 
     Joi = require('joi');
 
-    GetProducts(): any {
+    getProducts(): any {
         return getManager().getRepository(Product).find();
     }
 
-    CreateProduct(product: Product): any {
+    createProduct(product: Product): any {
 
         return getManager().getRepository(Product).save(product);
     }
 
-    GetProductById(id: number): any {
+    getProductById(id: number): any {
         return getManager().getRepository(Product).findByIds([id]);
     }
 
-    GetProductByCartId(id: number): any {
+    getProductByCartId(id: number): any {
         return getManager()
             .query('GetProductDetailsByCartId @CartId=' + id);
     }
 
-    UpdateProduct(id: number, product: Product): any {
+    updateProduct(id: number, product: Product): any {
         return getManager().getRepository(Product).update(id, product);
     }
 
-    DeleteProduct(id: number): any {
+    deleteProduct(id: number): any {
         return getManager().getRepository(Product).delete(id);
     }
 
