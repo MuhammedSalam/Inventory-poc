@@ -7,6 +7,8 @@ import { Orders } from '../entity/order-entity';
 import { IProductRepository } from '../repository/Interface/IProductRepository';
 import { INotificationService } from '../services/interfaces/INotificationService';
 
+var logger = require("../common/logger");
+
 @controller("/orders")
 export class OrderController implements interfaces.Controller {
 
@@ -16,7 +18,7 @@ export class OrderController implements interfaces.Controller {
     private _notificationService: INotificationService;
 
     constructor(@inject(TYPES.OrderRepository) orderRepository: IOrderRepository,
-    
+
         @inject(TYPES.ProductRepository) productRepository: IProductRepository,
 
         @inject(TYPES.NotificationService) notificationService: INotificationService) {
@@ -54,8 +56,8 @@ export class OrderController implements interfaces.Controller {
     public async Index(@request() req: express.Request, @response() res: express.Response) {
         try {
 
-            console.log("Received PlaceOrder ==> POST");
-
+            
+            logger.log('info', "Received PlaceOrder ==> POST");
             let order: Orders = new Orders();
 
             order.CartID = req.body.cartid;
@@ -79,6 +81,9 @@ export class OrderController implements interfaces.Controller {
             });
 
         } catch (error) {
+           
+            logger.log('error', error.message);
+
             res.status(400).json(error);
         }
     }

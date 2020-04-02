@@ -36,6 +36,7 @@ const inversify_express_utils_1 = require("inversify-express-utils");
 const inversify_1 = require("inversify");
 const type_1 = __importDefault(require("../type"));
 const order_entity_1 = require("../entity/order-entity");
+var logger = require("../common/logger");
 let OrderController = class OrderController {
     constructor(orderRepository, productRepository, notificationService) {
         this._orderRepository = orderRepository;
@@ -65,7 +66,8 @@ let OrderController = class OrderController {
     Index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log("Received PlaceOrder ==> POST");
+                // throw Error("known error");
+                logger.log('info', "Received PlaceOrder ==> POST");
                 let order = new order_entity_1.Orders();
                 order.CartID = req.body.cartid;
                 order.UserID = req.body.userid;
@@ -83,6 +85,7 @@ let OrderController = class OrderController {
                 });
             }
             catch (error) {
+                logger.log('error', error.message);
                 res.status(400).json(error);
             }
         });

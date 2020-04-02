@@ -24,6 +24,7 @@ const bodyParser = __importStar(require("body-parser"));
 require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const appConfig = __importStar(require("./common/app-config"));
+var logger = require("./common/logger");
 const inversify_express_utils_1 = require("inversify-express-utils");
 const inversify_config_1 = __importDefault(require("./inversify.config"));
 require("./controllers/user.controller");
@@ -39,6 +40,7 @@ appConfigured.set("port", process.env.PORT || 8080);
 appConfigured.listen(appConfigured.get("port"), () => {
     console.log(("  App is running at http://localhost:%d in %s mode"), appConfigured.get("port"), appConfigured.get("env"));
     console.log("  Press CTRL-C to stop\n");
+    logger.log('info', 'Everything started properly.');
 });
 typeorm_1.createConnection(appConfig.dbOptions).then((connection) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Connected to DB: " + appConfig.dbOptions.database);

@@ -36,6 +36,9 @@ const inversify_express_utils_1 = require("inversify-express-utils");
 const inversify_1 = require("inversify");
 const type_1 = __importDefault(require("../type"));
 const cart_entity_1 = require("../entity/cart-entity");
+var logger = require("../common/logger");
+//var logger = require('./logger');
+//logger.debugLevel = 'warn';
 let CartController = class CartController {
     constructor(cartRepository) {
         this._cartRepository = cartRepository;
@@ -43,8 +46,9 @@ let CartController = class CartController {
     GetCartByUserId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log("Received GetCartByUserId ==> GET");
-                console.log(req.params);
+                logger.log('info', "Received GetCartByUserId ==> GET");
+                //  console.log("Received GetCartByUserId ==> GET");
+                //  console.log(req.params);
                 if (parseInt(req.params.id) > 0) {
                     const cart = yield this._cartRepository.getCartById(parseInt(req.params.id)).then((cart) => {
                         console.log("Result : " + cart);

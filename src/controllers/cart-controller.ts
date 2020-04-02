@@ -4,6 +4,10 @@ import { inject } from 'inversify';
 import TYPES from '../type';
 import { ICartRepository } from '../repository/Interface/ICartRepository';
 import { Cart } from '../entity/cart-entity';
+var logger = require("../common/logger");
+
+//var logger = require('./logger');
+//logger.debugLevel = 'warn';
 
 @controller("/cart")
 export class CartController implements interfaces.Controller {
@@ -16,8 +20,10 @@ export class CartController implements interfaces.Controller {
     @httpGet("/:id")
     public async GetCartByUserId(@request() req: express.Request, @response() res: express.Response) {
         try {
-            console.log("Received GetCartByUserId ==> GET");
-            console.log(req.params);
+
+            logger.log('info', "Received GetCartByUserId ==> GET");
+            //  console.log("Received GetCartByUserId ==> GET");
+          //  console.log(req.params);
 
             if (parseInt(req.params.id) > 0) {
                 const cart = await this._cartRepository.getCartById(parseInt(req.params.id)).then((cart: any) => {

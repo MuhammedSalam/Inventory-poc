@@ -4,6 +4,7 @@ import "reflect-metadata";
 
 import { createConnection } from "typeorm";
 import * as appConfig from "./common/app-config";
+var logger = require("./common/logger");
 
 import { InversifyExpressServer, interfaces, TYPE } from "inversify-express-utils";
 import container from "./inversify.config";
@@ -30,6 +31,8 @@ appConfigured.listen(appConfigured.get("port"), () => {
 
     console.log(("  App is running at http://localhost:%d in %s mode"), appConfigured.get("port"), appConfigured.get("env"));
     console.log("  Press CTRL-C to stop\n");
+    logger.log('info', 'Everything started properly.');
+
 });
 
 
